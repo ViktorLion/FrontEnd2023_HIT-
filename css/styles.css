@@ -36,22 +36,7 @@ transition: background-color 0.3s ease-in-out;
 }
 
 input[type="text"]:hover, input[type="date"]:hover, select:hover {
-background-color: lightgray;
-}
-
-input[type="submit"] {
-width: 60px;
-height: 32px;
-background-color: lightblue;
-border: none;
-border-radius: 20px;
-cursor: pointer;
-transition: background-color 0.3s ease-in-out;
-}
-
-input[type="submit"]:hover {
-background-color: blue;
-color: white;
+background-color: rgb(194, 194, 248);
 }
 
 table {
@@ -71,7 +56,7 @@ tr {
 }
 
 tr:hover {
-    background-color: lightgray;
+    background-color: rgb(211, 211, 211);
 }
 
 /* Add alternating background colors to rows */
@@ -80,7 +65,7 @@ tr:nth-child(odd) {
 }
 
 tr:nth-child(even) {
-    background-color: lightgray;
+    background-color: #decfe265;
 }
 
 /* Add padding to cells */
@@ -92,4 +77,25 @@ td {
     max-width: 500px;
     max-height: 500px;
     
+  }
+
+#expense-date {
+    display: flex;
+}  
+
+button {
+    background-color: #3e124aae; 
+    max-width: 220px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+  
+  /* Add hover effect to the buttons */
+  button:hover {
+    background-color: #513e8e;
   }

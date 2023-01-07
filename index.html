@@ -28,11 +28,16 @@
     <button type="submit">Add Expense</button><br>
   </form>
   <form id="expense-date">
-    <label for="startDate">From:</label>
-    <input type="date" id="startDate" name="startDate"><br>
-    <label for="endDate">To:</label>
-    <input type="date" id="endDate" name="endDate"><br>
-    </select><br>
+    <div style="display: flex;  column-gap: 70px; ">
+      <div style="display: flex; flex-direction: column">
+        <label for="startDate">From:</label>
+        <input type="date" id="startDate" name="startDate">
+      </div>
+      <div style="display: flex; flex-direction: column" >
+        <label for="endDate" id="endDateLabel">To:</label>
+        <input type="date" id="endDate" name="endDate">
+      </div>
+    </div>
     <button type="submitDate">Show</button><br>
   </form>
   <canvas id="pie-chart"></canvas>
