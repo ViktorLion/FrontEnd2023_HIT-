@@ -6,7 +6,9 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>My Expenses</h1>
+    <header>
+        <h1>My Expenses</h1>
+    </header>
   <form id="expense-form">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name"><br>
@@ -23,9 +25,16 @@
       <option value="mortgage">Mortgage</option>
       <option value="electronics">Electronics</option>
     </select><br>
-    <button type="submit">Add Expense</button>
+    <button type="submit">Add Expense</button><br>
   </form>
-    
+  <form id="expense-date">
+    <label for="startDate">From:</label>
+    <input type="date" id="startDate" name="startDate"><br>
+    <label for="endDate">To:</label>
+    <input type="date" id="endDate" name="endDate"><br>
+    </select><br>
+    <button type="submitDate">Show</button><br>
+  </form>
   <table>
     <tr>
       <th>Date</th>

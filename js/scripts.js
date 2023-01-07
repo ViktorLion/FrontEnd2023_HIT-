@@ -1,4 +1,5 @@
 const form = document.getElementById("expense-form");
+const dateForm = document.getElementById("expense-date");
 const table = document.querySelector("table");
 loadExpenses();
 const priceInput = form.elements.price;
@@ -107,3 +108,41 @@ function removeExpense(id) {
     // Save the updated expenses array to local storage
     localStorage.setItem("expenses", JSON.stringify(expenses));
 }
+
+
+//Show date functionality 
+
+dateForm.addEventListener("submit", event => {
+  event.preventDefault();
+  
+  // Get the values from the form inputs
+  
+  const startDate = dateForm.elements.startDate.value;
+  const endDate = dateForm.elements.endDate.value;
+  console.log(startDate)
+  console.log(endDate)
+
+  // Load the expenses from local storage
+  loadDateExpenses(startDate, endDate);
+})
+
+function loadDateExpenses(startDate, endDate) {
+    table.innerHTML = '';
+    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+    // Filter the expenses by the given dates
+    const filteredExpenses = expenses.filter(expense => {
+      return expense.date >= startDate && expense.date <= endDate;
+    });
+    filteredExpenses.forEach(expense => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${expense.date}</td>
+        <td>${expense.id}</td>
+        <td>${expense.name}</td>
+        <td>${expense.category}</td>
+        <td>${expense.description}</td>
+        <td>${expense.price}</td>
+        <td><button class="delete">Delete</button></td>`;
+      table.appendChild(row);
+    });
+  }
