@@ -87,3 +87,9 @@ tr:nth-child(even) {
 td {
     padding: 12px; /* Change this value to your desired padding */
 }
+
+#pie-chart {
+    max-width: 500px;
+    max-height: 500px;
+    
+  }
