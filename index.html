@@ -1,12 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <title>My Expenses</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <h1>My Expenses</h1>
+  <form id="expense-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price"><br>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date"><br>
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description"><br>
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+      <option value="food">Food</option>
+      <option value="travel">Travel</option>
+      <option value="mortgage">Mortgage</option>
+      <option value="electronics">Electronics</option>
+    </select><br>
+    <button type="submit">Add Expense</button>
+  </form>
     
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Price</th>
+      <td></td>
+    </tr>
+    <!-- Expense rows will be added here -->
+  </table>
+  <script src="js/scripts.js"></script>
 </body>
 </html>
