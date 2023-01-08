@@ -7,7 +7,7 @@ header {
     font-size: 19px;
     font-weight: bold;
     color: white; 
-    background-color: rgba(41, 38, 210, 0.208); 
+    background-color: rgba(150, 38, 210, 0.325); 
     padding: 16px; 
     border-radius: 10px;
     text-align: center;
@@ -22,6 +22,30 @@ font-weight: bold;
 margin-bottom: 8px;
 color: rgb(51, 8, 51);
 }
+
+.mainForm{
+    background-color: rgba(30, 28, 164, 0.208);
+    border-radius: 10px;
+    width: 250px;
+}
+#expense-form{
+    margin-left: 12px;
+    margin-top: 10px;
+    margin-bottom:  10px;
+}
+
+.dateForm{
+    background-color: rgba(30, 28, 164, 0.208);
+    border-radius: 10px;
+    width: 550px;
+}
+
+#expense-date{
+    margin-left: 12px;
+    margin-top: 10px;
+    margin-bottom:  10px;
+}
+
 
 input[type="text"], input[type="date"], select {
 width: 200px;

@@ -9,24 +9,27 @@
     <header>
         <h1>My Expenses</h1>
     </header>
-  <form id="expense-form">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name"><br>
-    <label for="price">Price:</label>
-    <input type="text" id="price" name="price"><br>
-    <label for="date">Date:</label>
-    <input type="date" id="date" name="date"><br>
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description"><br>
-    <label for="category">Category:</label>
-    <select id="category" name="category">
-      <option value="food">Food</option>
-      <option value="travel">Travel</option>
-      <option value="mortgage">Mortgage</option>
-      <option value="electronics">Electronics</option>
-    </select><br>
-    <button type="submit">Add Expense</button><br>
+    <div class="mainForm">
+        <form id="expense-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price"><br>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date"><br>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description"><br>
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+        <option value="food">Food</option>
+        <option value="travel">Travel</option>
+        <option value="mortgage">Mortgage</option>
+        <option value="electronics">Electronics</option>
+        </select><br>
+        <button type="submit">Add Expense</button><br>
   </form>
+</div>
+<div class = "dateForm">
   <form id="expense-date">
     <div style="display: flex;  column-gap: 70px; ">
       <div style="display: flex; flex-direction: column">
@@ -40,6 +43,7 @@
     </div>
     <button type="submitDate">Show</button><br>
   </form>
+</div>  
   <canvas id="pie-chart"></canvas>
   <table>
     <tr>

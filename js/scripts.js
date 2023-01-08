@@ -235,7 +235,7 @@ function loadChartExpenses(startDate, endDate) {
           legend: {
             position: "bottom"
           }, 
-          tooltips: false
+          //tooltips: true
         }
       })
     }
