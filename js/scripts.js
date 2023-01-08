@@ -1,21 +1,16 @@
 const form = document.getElementById("expense-form");
 const dateForm = document.getElementById("expense-date");
 const table = document.querySelector("table");
-loadExpenses();
-
 const priceInput = form.elements.price;
 
-
-let counter =0;
-
-
+loadExpenses();
 
 priceInput.addEventListener("input", () => {
   const price = priceInput.value;
   if (!Number.isInteger(+price)) {
-    priceInput.style.borderColor = "red";
+    priceInput.style.border  = "3px solid red";
   } else {
-    priceInput.style.borderColor = "";
+    priceInput.style.border  = "";
   }
 });
 
@@ -32,7 +27,7 @@ form.addEventListener("submit", event => {
   event.preventDefault();
 
   // Get the values from the form inputs
-  let id = counter++//uuidv4();
+  let id = uuidv4();
   const name = form.elements.name.value;
   const price = form.elements.price.value;
   let date = form.elements.date.value;
@@ -68,7 +63,15 @@ form.addEventListener("submit", event => {
 });
 
 function loadExpenses() {
-    table.innerHTML = '';
+    table.innerHTML = ` 
+    <tr>
+    <th>Date</th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Description</th>
+    <th>Price</th>
+  </tr>`;
     const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
     expenses.forEach(expense => {
       const row = document.createElement("tr");
@@ -81,7 +84,9 @@ function loadExpenses() {
         <td>${expense.price}</td>
         <td><button class="delete">Delete</button></td>`;
       table.appendChild(row);
+      
     });
+    
 }
 
 
@@ -101,16 +106,19 @@ if (event.target.className === "delete") {
 });
 
 function removeExpense(id) {
+    console.log(id)
     // Get the expenses from local storage
     const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-    const index = expenses.findIndex(expense => expense.id === id);
-
-    // Remove the expense from the array
-    expenses.splice(index, 1);
-
+    //console.log(expenses)
+    // Create a new array with the expenses that have an ID different from the given ID
+    const filteredExpenses = expenses.filter(expense =>
+        expense.id != id 
+        );
+    
+    console.log(filteredExpenses)
     // Save the updated expenses array to local storage
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-}
+    localStorage.setItem("expenses", JSON.stringify(filteredExpenses));
+  }
 
 
 //Show date functionality 
@@ -137,9 +145,15 @@ function loadDateExpenses(startDate, endDate) {
         endDate =  "2025-01-01"
     }
 
-       
-    
-    table.innerHTML = '';
+    table.innerHTML = ` 
+    <tr>
+    <th>Date</th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Description</th>
+    <th>Price</th>
+  </tr>`;
     const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
     // Filter the expenses by the given dates
     const filteredExpenses = expenses.filter(expense => {
@@ -174,22 +188,14 @@ function loadChartExpenses(startDate, endDate) {
     // Count the number of expenses in each category
     const categories = {};
     expenses.forEach(expense => {
-      if (startDate && endDate) {
-        if (expense.date >= startDate && expense.date <= endDate) {
-          if (categories[expense.category]) {
-            categories[expense.category]++;
-          } else {
-            categories[expense.category] = 1;
-          }
-        }
-      } else {
+    if (!startDate || !endDate || (expense.date >= startDate && expense.date <= endDate)) {
         if (categories[expense.category]) {
-          categories[expense.category]++;
+        categories[expense.category]++;
         } else {
-          categories[expense.category] = 1;
+        categories[expense.category] = 1;
         }
-      }
-    });
+    }
+});
   
     // Get the labels and data for the pie chart
     const labels = [];
