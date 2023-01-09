@@ -1,6 +1,7 @@
 const form = document.getElementById("expense-form");
 const dateForm = document.getElementById("expense-date");
 const table = document.querySelector("table");
+const total = document.getElementById("total")
 const priceInput = form.elements.price;
 
 loadExpenses();
@@ -29,7 +30,7 @@ form.addEventListener("submit", event => {
   // Get the values from the form inputs
   let id = uuidv4();
   const name = form.elements.name.value;
-  const price = form.elements.price.value;
+  let price = form.elements.price.value;
   let date = form.elements.date.value;
   const description = form.elements.description.value;
   const category = form.elements.category.value;
@@ -39,6 +40,10 @@ form.addEventListener("submit", event => {
     // Stop the form submission
     return;
   }
+  if (price == '') {
+    price = 0;
+  }
+  
   
   // Set the date to the current date if it wasn't set
   if (!date) {
@@ -106,7 +111,7 @@ if (event.target.className === "delete") {
 });
 
 function removeExpense(id) {
-    console.log(id)
+    
     // Get the expenses from local storage
     const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
     //console.log(expenses)
@@ -114,8 +119,7 @@ function removeExpense(id) {
     const filteredExpenses = expenses.filter(expense =>
         expense.id != id 
         );
-    
-    console.log(filteredExpenses)
+
     // Save the updated expenses array to local storage
     localStorage.setItem("expenses", JSON.stringify(filteredExpenses));
   }
@@ -187,14 +191,19 @@ function loadChartExpenses(startDate, endDate) {
     const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
     // Count the number of expenses in each category
     const categories = {};
+    let totalSum = 0
     expenses.forEach(expense => {
     if (!startDate || !endDate || (expense.date >= startDate && expense.date <= endDate)) {
-        if (categories[expense.category]) {
-        categories[expense.category]++;
-        } else {
-        categories[expense.category] = 1;
-        }
+      totalSum += (+expense.price)
+      if (categories[expense.category]) {
+        categories[expense.category] += (+expense.price);
+      } else {
+        categories[expense.category] = (+expense.price);
+      }
     }
+    total.textContent = `Total:${totalSum}` 
+    console.log(totalSum)
+
 });
   
     // Get the labels and data for the pie chart
@@ -202,7 +211,7 @@ function loadChartExpenses(startDate, endDate) {
     const data = [];
     for (const category in categories) {
       labels.push(category);
-      data.push(categories[category]);
+    data.push(categories[category]);
     }
   
     // Get the pie chart canvas element
