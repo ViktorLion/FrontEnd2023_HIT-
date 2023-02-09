@@ -100,7 +100,6 @@ if (event.target.className === "delete") {
     // Get the row element that contains the delete button
     const row = event.target.parentNode.parentNode;
     const id = row.cells[1].textContent;
-    // Get the expense object associated with the row
     // Remove the expense from local storage
     removeExpense(id);
     
@@ -114,7 +113,7 @@ function removeExpense(id) {
     
     // Get the expenses from local storage
     const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-    //console.log(expenses)
+    
     // Create a new array with the expenses that have an ID different from the given ID
     const filteredExpenses = expenses.filter(expense =>
         expense.id != id 
@@ -201,8 +200,8 @@ function loadChartExpenses(startDate, endDate) {
         categories[expense.category] = (+expense.price);
       }
     }
-    total.textContent = `Total:${totalSum}` 
-    console.log(totalSum)
+    total.textContent = `Total: ${totalSum}` 
+    
 
 });
   
