@@ -1,111 +1,68 @@
-const form = document.getElementById("expense-form");
-const dateForm = document.getElementById("expense-date");
-const table = document.querySelector("table");
-const total = document.getElementById("total")
-const priceInput = form.elements.price;
+import { Expense } from "./expense.js";
+import { ExpenseChart } from "./chart.js";
 
-loadExpenses();
+let utilsnamespaces = {};
+utilsnamespaces.form = document.getElementById("expense-form");
+utilsnamespaces.dateForm = document.getElementById("expense-date");
+utilsnamespaces.table = document.querySelector("table");
+utilsnamespaces.total = document.getElementById("total")
+utilsnamespaces.priceInput = utilsnamespaces.form.elements.price;
+utilsnamespaces.chart = new ExpenseChart();
 
-priceInput.addEventListener("input", () => {
-  const price = priceInput.value;
+
+// Event listeners
+
+utilsnamespaces.priceInput.addEventListener("input", () => {
+  const price = utilsnamespaces.priceInput.value;
   if (!Number.isInteger(+price)) {
-    priceInput.style.border  = "3px solid red";
+      utilsnamespaces.priceInput.style.border  = "3px solid red";
   } else {
-    priceInput.style.border  = "";
+      utilsnamespaces.priceInput.style.border  = "";
   }
 });
 
 
-function uuidv4() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    );
-  }
-  
-
-let row;
-form.addEventListener("submit", event => {
+utilsnamespaces.form.addEventListener("submit", event => {
   event.preventDefault();
 
   // Get the values from the form inputs
-  let id = uuidv4();
-  const name = form.elements.name.value;
-  let price = form.elements.price.value;
-  let date = form.elements.date.value;
-  const description = form.elements.description.value;
-  const category = form.elements.category.value;
-
-  // Validate the price input
-  if (!Number.isInteger(+price)) {
-    // Stop the form submission
-    return;
-  }
-  if (price == '') {
-    price = 0;
-  }
-  
-  
-  // Set the date to the current date if it wasn't set
-  if (!date) {
-    const today = new Date();
-    date = today.toISOString().substr(0, 10);
-  }
+  const name = utilsnamespaces.form.elements.name.value;
+  let price = utilsnamespaces.form.elements.price.value;
+  let date = utilsnamespaces.form.elements.date.value;
+  const description = utilsnamespaces.form.elements.description.value;
+  const category = utilsnamespaces.form.elements.category.value;
 
   // Create a new expense object
-  const expense = { id, name, price, date, description, category };
-  
+  const expense = new Expense(name, price, date, description, category);
+
   // Save the expense to local storage
-  var expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-  expenses.push(expense);
-  localStorage.setItem("expenses", JSON.stringify(expenses));
+  Expense.prototype.saveExpense(expense);
 
   // Add the expense to the table
-  
-  form.reset();
+  utilsnamespaces.form.reset();
+
   // Load the expenses from local storage
-  loadExpenses();
-  loadChartExpenses()
+  loadTable();
+  utilsnamespaces.chart.setAndGetChart(utilsnamespaces.total);
 });
 
-function loadExpenses() {
-    table.innerHTML = ` 
-    <tr>
-    <th>Date</th>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Category</th>
-    <th>Description</th>
-    <th>Price</th>
-  </tr>`;
-    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-    expenses.forEach(expense => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${expense.date}</td>
-        <td>${expense.id}</td>
-        <td>${expense.name}</td>
-        <td>${expense.category}</td>
-        <td>${expense.description}</td>
-        <td>${expense.price}</td>
-        <td><button class="delete">Delete</button></td>`;
-      table.appendChild(row);
-      
-    });
-    
-}
 
-
-table.addEventListener("click", event => {
+utilsnamespaces.table.addEventListener("click", event => {
 if (event.target.className === "delete") {
     // Get the row element that contains the delete button
     const row = event.target.parentNode.parentNode;
+
+    // Get the id of expense object within the row
     const id = row.cells[1].textContent;
+    // Get the expense object associated with the row
     // Remove the expense from local storage
-    removeExpense(id);
-    
+    Expense.prototype.removeExpense(id);
+
     // Remove the row from the table
     row.remove();
-    loadChartExpenses()
+
+    // Reload the chart
+    utilsnamespaces.chart.setAndGetChart(utilsnamespaces.total);
 }
 });
 
@@ -113,7 +70,7 @@ function removeExpense(id) {
     
     // Get the expenses from local storage
     const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-    
+    //console.log(expenses)
     // Create a new array with the expenses that have an ID different from the given ID
     const filteredExpenses = expenses.filter(expense =>
         expense.id != id 
@@ -128,19 +85,26 @@ function removeExpense(id) {
 
 dateForm.addEventListener("submit", event => {
   event.preventDefault();
-  
+
   // Get the values from the form inputs
-  
-  const startDate = dateForm.elements.startDate.value;
-  const endDate = dateForm.elements.endDate.value;
- 
+  const startDate = utilsnamespaces.dateForm.elements.startDate.value;
+  const endDate = utilsnamespaces.dateForm.elements.endDate.value;
 
   // Load the expenses from local storage
-  loadDateExpenses(startDate, endDate);
-  loadChartExpenses(startDate, endDate)
-})
+  filterTable(startDate, endDate);
+  utilsnamespaces.chart.setAndGetChart(startDate, endDate, utilsnamespaces.total);
+});
 
-function loadDateExpenses(startDate, endDate) {
+
+//Functions
+
+function loadTable() {
+    const expenses = Expense.prototype.loadExpenses();
+    Expense.prototype.loadExpenseTable(utilsnamespaces.table, expenses);
+}
+
+
+function filterTable(startDate, endDate) {
     if(!startDate){
         startDate =  "2020-01-01"
     }
@@ -148,19 +112,11 @@ function loadDateExpenses(startDate, endDate) {
         endDate =  "2025-01-01"
     }
 
-    table.innerHTML = ` 
-    <tr>
-    <th>Date</th>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Category</th>
-    <th>Description</th>
-    <th>Price</th>
-  </tr>`;
-    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+    const expenses = Expense.prototype.loadExpenses();
+
     // Filter the expenses by the given dates
     const filteredExpenses = expenses.filter(expense => {
-      return expense.date >= startDate && expense.date <= endDate;
+        return expense.date >= startDate && expense.date <= endDate;
     });
     filteredExpenses.forEach(expense => {
       const row = document.createElement("tr");
@@ -200,8 +156,8 @@ function loadChartExpenses(startDate, endDate) {
         categories[expense.category] = (+expense.price);
       }
     }
-    total.textContent = `Total: ${totalSum}` 
-    
+    total.textContent = `Total:${totalSum}` 
+    console.log(totalSum)
 
 });
   
