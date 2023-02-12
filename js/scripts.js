@@ -1,3 +1,6 @@
+// Viktor Rokytko - 336484951
+// May Vakrat - 205735657
+
 import { Expense } from "./expense.js";
 import { ExpenseChart } from "./chart.js";
 

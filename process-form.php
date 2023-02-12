@@ -1,4 +1,6 @@
 <?php
+// Viktor Rokytko - 336484951
+// May Vakrat - 205735657
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -1,3 +1,5 @@
+// Viktor Rokytko - 336484951
+// May Vakrat - 205735657
 
 export const Expense = function (name, price, date, description, category) {
     this.name = name;
