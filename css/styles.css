@@ -29,7 +29,7 @@ color: rgb(51, 8, 51);
     border-radius: 10px;
     width: 250px;
 }
-#expense-form{
+#expense-form ,#expense-date {
     margin-left: 12px;
     margin-top: 10px;
     margin-bottom:  10px;
@@ -41,11 +41,7 @@ color: rgb(51, 8, 51);
     width: 550px;
 }
 
-#expense-date{
-    margin-left: 12px;
-    margin-top: 10px;
-    margin-bottom:  10px;
-}
+
 
 
 input[type="text"], input[type="date"], select {
@@ -53,8 +49,8 @@ width: 200px;
 height: 30px;
 border: 1px solid gray;
 border-radius: 20px;
-margin-bottom: 16px;
-padding: 8px;
+margin-bottom: 10px;
+padding: 6px;
 background-color: white;
 color: black;
 transition: background-color 0.3s ease-in-out;
@@ -70,7 +66,7 @@ width: 100%;
 }
 
 th, td {
-border: 1px solid rgb(0, 0, 0);
+border: 2px solid rgb(0, 0, 0);
 padding: 8px;
 }
 
